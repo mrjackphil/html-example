@@ -1,0 +1,37 @@
+  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src=""></script>
+    <script type="module">
+        import { createApp, reactive } from 'https://unpkg.com/petite-vue?module'
+        import { syncedStore, getYjsDoc, enableVueBindings  } from 'https://cdn.jsdelivr.net/npm/@syncedstore/core@0.6.0/+esm'
+        import { WebrtcProvider } from 'https://cdn.jsdelivr.net/npm/y-webrtc@10.3.0/+esm';
+        import * as Vue from 'https://unpkg.com/petite-vue?module'
+
+        const store = syncedStore({ state: {} });
+        new WebrtcProvider("some", getYjsDoc(store), { signaling: ["wss://y-webrtc-signaler-iyf6.onrender.com"] }); // 
+
+        enableVueBindings(Vue)
+
+        store.state.count = 0
+
+        createApp({ store }).mount()
+
+    </script>
+
+    <div v-scope="{ localCount: 0 }">
+        <p>Global {{ store.state.count || 0 }}</p>
+        <button @click="store.state.count++">increment</button>
+
+        <p>Local {{ localCount }}</p>
+        <button @click="localCount++">increment</button>
+</body>
+
+</html>
